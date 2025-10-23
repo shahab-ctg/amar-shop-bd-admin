@@ -10,7 +10,7 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Shodaigram Admin",
+  title: "Amar Shop Admin",
   description: "Admin panel for Shodaigram",
 };
 

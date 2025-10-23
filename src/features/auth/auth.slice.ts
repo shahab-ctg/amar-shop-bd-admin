@@ -1,10 +1,10 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-/** Auth slice state */
+
 export type AuthState = {
-  /** JWT বা null */
+
   token: string | null;
-  /** localStorage থেকে লোডিং শেষ হয়েছে কি না */
+
   isHydrated: boolean;
 };
 
@@ -17,7 +17,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    /** লগইনের পর টোকেন সেট/আপডেট */
+ 
     setToken(state, action: PayloadAction<string | null>) {
       state.token = action.payload;
       state.isHydrated = true;

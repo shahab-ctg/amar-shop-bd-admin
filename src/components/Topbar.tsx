@@ -15,7 +15,7 @@ import {
   LogOut,
   Menu,
   X,
-  Leaf,
+  Sparkles,
   Package,
   FolderTree,
   LayoutDashboard,
@@ -43,7 +43,7 @@ export default function Topbar() {
   const { data, isLoading } = useListCategoriesQuery();
   const cats = data?.data ?? [];
 
-  const brand = process.env.NEXT_PUBLIC_BRAND || "ShodaiGram";
+  const brand = process.env.NEXT_PUBLIC_BRAND || "Amar Shop";
   const hotline = process.env.NEXT_PUBLIC_HOTLINE || "01700000000";
 
   const onSearch = (e: React.FormEvent) => {
@@ -66,7 +66,7 @@ export default function Topbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-emerald-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Header */}
         <div className="flex items-center gap-4 py-4">
@@ -75,14 +75,14 @@ export default function Topbar() {
             href="/dashboard"
             className="flex items-center gap-2 shrink-0 group"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <Leaf className="w-6 h-6 text-white" strokeWidth={2.5} />
+            <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+              <Sparkles className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
             <div className="hidden sm:block">
-              <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-green-600">
+              <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-700 to-rose-600">
                 {brand}
               </div>
-              <div className="text-xs text-emerald-600 font-medium">
+              <div className="text-xs text-pink-600 font-medium">
                 Admin Panel
               </div>
             </div>
@@ -101,8 +101,8 @@ export default function Topbar() {
                   className={clsx(
                     "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200",
                     isActive
-                      ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-md"
-                      : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
+                      ? "bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md"
+                      : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -119,19 +119,19 @@ export default function Topbar() {
           >
             <div className="flex-1 flex items-center gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-500" />
                 <input
                   placeholder="Search products..."
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border-2 border-emerald-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all bg-white/50"
+                  className="w-full pl-10 pr-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-100 transition-all bg-white/50"
                 />
               </div>
               <select
                 value={cat}
                 onChange={(e) => setCat(e.target.value)}
                 disabled={isLoading}
-                className="px-4 py-2.5 border-2 border-emerald-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all bg-white/50 min-w-[160px]"
+                className="px-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-100 transition-all bg-white/50 min-w-[160px]"
               >
                 <option value="">
                   {isLoading ? "Loading..." : "All categories"}
@@ -145,7 +145,7 @@ export default function Topbar() {
             </div>
             <button
               type="submit"
-              className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-medium rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg"
+              className="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-medium rounded-xl hover:from-pink-600 hover:to-rose-700 transition-all shadow-md hover:shadow-lg"
             >
               Search
             </button>
@@ -153,7 +153,7 @@ export default function Topbar() {
               <button
                 type="button"
                 onClick={onClear}
-                className="px-4 py-2.5 border-2 border-emerald-200 text-emerald-700 font-medium rounded-xl hover:bg-emerald-50 transition-all"
+                className="px-4 py-2.5 border-2 border-pink-200 text-pink-700 font-medium rounded-xl hover:bg-pink-50 transition-all"
               >
                 Clear
               </button>
@@ -165,7 +165,7 @@ export default function Topbar() {
             <a
               title="Call us"
               href={`tel:${hotline}`}
-              className="flex items-center gap-2 px-4 py-2.5 border-2 border-emerald-200 text-emerald-700 font-medium rounded-xl hover:bg-emerald-50 transition-all"
+              className="flex items-center gap-2 px-4 py-2.5 border-2 border-pink-200 text-pink-700 font-medium rounded-xl hover:bg-pink-50 transition-all"
             >
               <Phone className="w-4 h-4" />
               <span className="text-sm">{hotline}</span>
@@ -184,7 +184,7 @@ export default function Topbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
+            className="lg:hidden p-2 text-pink-600 hover:bg-pink-50 rounded-xl transition-all"
           >
             {mobileMenuOpen ? (
               <X className="w-6 h-6" />
@@ -198,12 +198,12 @@ export default function Topbar() {
         <div className="md:hidden pb-4">
           <form onSubmit={onSearch} className="space-y-2">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-500" />
               <input
                 placeholder="Search products..."
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border-2 border-emerald-200 rounded-xl focus:outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all bg-white/50"
+                className="w-full pl-10 pr-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-100 transition-all bg-white/50"
               />
             </div>
             <div className="flex gap-2">
@@ -211,7 +211,7 @@ export default function Topbar() {
                 value={cat}
                 onChange={(e) => setCat(e.target.value)}
                 disabled={isLoading}
-                className="flex-1 px-4 py-2.5 border-2 border-emerald-200 rounded-xl focus:outline-none focus:border-emerald-500 transition-all bg-white/50"
+                className="flex-1 px-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 transition-all bg-white/50"
               >
                 <option value="">
                   {isLoading ? "Loading..." : "All categories"}
@@ -224,7 +224,7 @@ export default function Topbar() {
               </select>
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-medium rounded-xl shadow-md"
+                className="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-medium rounded-xl shadow-md"
               >
                 Search
               </button>
@@ -233,7 +233,7 @@ export default function Topbar() {
               <button
                 type="button"
                 onClick={onClear}
-                className="w-full px-4 py-2.5 border-2 border-emerald-200 text-emerald-700 font-medium rounded-xl hover:bg-emerald-50 transition-all"
+                className="w-full px-4 py-2.5 border-2 border-pink-200 text-pink-700 font-medium rounded-xl hover:bg-pink-50 transition-all"
               >
                 Clear Filters
               </button>
@@ -244,7 +244,7 @@ export default function Topbar() {
 
       {/* Mobile Navigation Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-emerald-100 bg-white">
+        <div className="lg:hidden border-t border-pink-100 bg-white">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-2">
             {NAV.map((n) => {
               const Icon = n.icon;
@@ -258,8 +258,8 @@ export default function Topbar() {
                   className={clsx(
                     "flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all",
                     isActive
-                      ? "bg-gradient-to-r from-emerald-500 to-green-600 text-white shadow-md"
-                      : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
+                      ? "bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md"
+                      : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
                   )}
                 >
                   <Icon className="w-5 h-5" />
@@ -268,10 +268,10 @@ export default function Topbar() {
               );
             })}
 
-            <div className="pt-2 mt-2 border-t border-emerald-100 space-y-2">
+            <div className="pt-2 mt-2 border-t border-pink-100 space-y-2">
               <a
                 href={`tel:${hotline}`}
-                className="flex items-center gap-3 px-4 py-3 border-2 border-emerald-200 text-emerald-700 font-medium rounded-xl hover:bg-emerald-50 transition-all"
+                className="flex items-center gap-3 px-4 py-3 border-2 border-pink-200 text-pink-700 font-medium rounded-xl hover:bg-pink-50 transition-all"
               >
                 <Phone className="w-5 h-5" />
                 <span>{hotline}</span>

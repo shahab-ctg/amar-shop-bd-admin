@@ -1,16 +1,23 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { Category, CreateCategoryDTO } from "@/types/category";
 
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "./base";
-import type { Category, CategoryStatus } from "@/types/category";
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:5000/api/v1";
 
-type CreateCategoryDTO = {
-  title: string;
-  slug: string;
-  image?: string;
-  status?: CategoryStatus; 
-};
-
-type UpdateCategoryDTO = Partial<CreateCategoryDTO>;
+export const baseQuery = fetchBaseQuery({
+  baseUrl: API_BASE,
+  prepareHeaders: (headers) => {
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
+    if (token) headers.set("Authorization", `Bearer ${token}`);
+    headers.set("Content-Type", "application/json");
+    return headers;
+  },
+});
 
 export const categoriesApi = createApi({
   reducerPath: "categoriesApi",
@@ -27,17 +34,16 @@ export const categoriesApi = createApi({
       CreateCategoryDTO
     >({
       query: (body) => ({
-        url: "admin/categories",
+        url: "/admin/categories",
         method: "POST",
         body,
       }),
       invalidatesTags: ["Categories"],
     }),
 
-    
     updateCategory: builder.mutation<
       { ok: boolean; data: Category },
-      { id: string; body: UpdateCategoryDTO }
+      { id: string; body: Partial<CreateCategoryDTO> }
     >({
       query: ({ id, body }) => ({
         url: `/admin/categories/${id}`,
