@@ -27,7 +27,6 @@ import {
 } from "@/services/orders.api";
 import type { Order, OrderStatus } from "@/types/order";
 
-
 /** date → bn-BD */
 const bnDate = (iso?: string) =>
   iso
@@ -48,8 +47,8 @@ const STATUS_UI: Record<
 > = {
   PENDING: {
     label: "Pending",
-    bg: "bg-yellow-100",
-    text: "text-yellow-700",
+    bg: "bg-amber-100",
+    text: "text-amber-700",
     Icon: Clock,
   },
   IN_PROGRESS: {
@@ -60,14 +59,14 @@ const STATUS_UI: Record<
   },
   IN_SHIPPING: {
     label: "In Shipping",
-    bg: "bg-indigo-100",
-    text: "text-indigo-700",
+    bg: "bg-purple-100",
+    text: "text-purple-700",
     Icon: AlertCircle,
   },
   DELIVERED: {
     label: "Delivered",
-    bg: "bg-green-100",
-    text: "text-green-700",
+    bg: "bg-emerald-100",
+    text: "text-emerald-700",
     Icon: CheckCircle,
   },
   CANCELLED: {
@@ -83,10 +82,10 @@ function StatusBadge({ status }: { status: OrderStatus }) {
   const I = s.Icon;
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold ${s.bg} ${s.text}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs font-semibold ${s.bg} ${s.text}`}
     >
-      <I className="w-3.5 h-3.5" />
-      {s.label}
+      <I className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+      <span className="hidden xs:inline">{s.label}</span>
     </span>
   );
 }
@@ -115,27 +114,29 @@ function Confirm({
   const btnClass =
     tone === "danger"
       ? "bg-red-600 hover:bg-red-700 focus:ring-red-500"
-      : "bg-emerald-600 hover:bg-emerald-700 focus:ring-emerald-500";
+      : "bg-pink-600 hover:bg-pink-700 focus:ring-pink-500";
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-emerald-100">
-        <div className="px-6 pt-6">
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-pink-100">
+        <div className="px-4 sm:px-6 pt-4 sm:pt-6">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+            {title}
+          </h3>
           {subtitle ? (
-            <p className="text-sm text-gray-600 mt-1">{subtitle}</p>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">{subtitle}</p>
           ) : null}
         </div>
-        <div className="flex gap-3 p-6">
+        <div className="flex gap-3 p-4 sm:p-6">
           <button
             onClick={onCancel}
-            className="flex-1 px-5 py-2.5 rounded-xl border border-emerald-200 text-gray-700 font-medium hover:bg-emerald-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition"
+            className="flex-1 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl border border-pink-200 text-gray-700 font-medium hover:bg-pink-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition text-sm"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
             disabled={loading}
-            className={`flex-1 px-5 py-2.5 rounded-xl text-white font-semibold disabled:opacity-50 inline-flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 transition ${btnClass}`}
+            className={`flex-1 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-white font-semibold disabled:opacity-50 inline-flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 transition text-sm ${btnClass}`}
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
             {confirmLabel}
@@ -160,7 +161,7 @@ export default function OrdersPage() {
   const [pendingStatus, setPendingStatus] = useState<OrderStatus | null>(null);
   const [pendingDelete, setPendingDelete] = useState<string | null>(null);
 
-  /** RTK Query calls (aligned to your service) */
+  /** RTK Query calls */
   const { data, isLoading, isFetching, error } = useListOrdersQuery({
     page,
     limit,
@@ -174,7 +175,7 @@ export default function OrdersPage() {
   const total = data?.data?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
-  /** client-side search (id/name) – memoized */
+  /** client-side search */
   const filtered = useMemo(() => {
     const ql = q.trim().toLowerCase();
     if (!ql) return items;
@@ -185,7 +186,6 @@ export default function OrdersPage() {
     );
   }, [items, q]);
 
-  
   const askStatusChange = (s: OrderStatus) => {
     if (s === "DELIVERED" || s === "CANCELLED") setPendingStatus(s);
     else doStatusChange(s);
@@ -197,11 +197,9 @@ export default function OrdersPage() {
       await doUpdate({ id: selected._id, body: { status: s } }).unwrap();
       toast.success(`Status updated to "${STATUS_UI[s].label}"`);
       setSelected({ ...selected, status: s });
-      // refetch list implicitly via tags; or optimistic UI already changed
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       toast.error(String(e?.data?.message || e?.data?.code || "Update failed"));
-     
       console.error(e);
     } finally {
       setPendingStatus(null);
@@ -215,7 +213,7 @@ export default function OrdersPage() {
       toast.success("Order deleted");
       setPendingDelete(null);
       setOpenDetails(false);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       toast.error(String(e?.data?.message || e?.data?.code || "Delete failed"));
       // eslint-disable-next-line no-console
@@ -223,49 +221,49 @@ export default function OrdersPage() {
     }
   };
 
-  /** skeleton while loading */
+  /** skeleton */
   const Skeleton = () => (
-    <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 animate-pulse">
-      <div className="p-6 space-y-4">
-        <div className="h-5 bg-emerald-100 rounded w-1/3" />
+    <div className="bg-white rounded-2xl shadow-sm border border-pink-100 animate-pulse">
+      <div className="p-4 sm:p-6 space-y-4">
+        <div className="h-5 bg-pink-100 rounded w-1/3" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          <div className="h-4 bg-emerald-100 rounded" />
-          <div className="h-4 bg-emerald-100 rounded" />
-          <div className="h-4 bg-emerald-100 rounded" />
+          <div className="h-4 bg-pink-100 rounded" />
+          <div className="h-4 bg-pink-100 rounded" />
+          <div className="h-4 bg-pink-100 rounded" />
         </div>
-        <div className="h-4 bg-emerald-100 rounded w-1/2" />
+        <div className="h-4 bg-pink-100 rounded w-1/2" />
       </div>
     </div>
   );
 
   return (
     <>
-        <Toaster position="top-right" />
+      <Toaster position="top-right" />
 
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-lime-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-700 to-green-600 mb-2 flex items-center gap-3">
-              <ClipboardList className="w-9 sm:w-10 h-9 sm:h-10 text-emerald-600" />
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 mb-2 flex items-center gap-2 sm:gap-3">
+              <ClipboardList className="w-7 h-7 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-pink-600" />
               Orders
             </h1>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               View & manage customer orders from your database
             </p>
           </div>
 
           {/* Filters */}
-          <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-4 sm:p-6 mb-6">
-            <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+          <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-4 sm:p-6 mb-6">
+            <div className="flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center">
               <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" />
+                <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-pink-500" />
                 <input
                   type="text"
-                  placeholder="Search by order ID or customer name..."
+                  placeholder="Search by order ID or customer..."
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 rounded-xl border border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition"
+                  className="w-full pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400 transition text-sm sm:text-base"
                 />
               </div>
               <select
@@ -274,7 +272,7 @@ export default function OrdersPage() {
                   setStatusFilter(e.target.value as OrderStatus | "");
                   setPage(1);
                 }}
-                className="px-4 py-3 rounded-xl border border-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:border-emerald-400 transition md:w-64"
+                className="px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400 transition md:w-64 text-sm sm:text-base"
               >
                 <option value="">All Statuses</option>
                 <option value="PENDING">Pending</option>
@@ -295,8 +293,8 @@ export default function OrdersPage() {
             </div>
           ) : error ? (
             <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-red-600" />
-              <p className="text-red-700">
+              <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+              <p className="text-sm sm:text-base text-red-700">
                 Failed to load orders. Please try again.
               </p>
             </div>
@@ -305,34 +303,34 @@ export default function OrdersPage() {
               {filtered.map((o) => (
                 <div
                   key={o._id}
-                  className="bg-white rounded-2xl shadow-sm border border-emerald-100 hover:shadow-md transition"
+                  className="bg-white rounded-2xl shadow-sm border border-pink-100 hover:shadow-md transition"
                 >
-                  <div className="p-6">
+                  <div className="p-4 sm:p-6">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                       {/* Info */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-3">
-                          <h3 className="text-lg sm:text-xl font-bold text-emerald-700 break-all">
+                        <div className="flex items-center gap-2 sm:gap-3 mb-3 flex-wrap">
+                          <h3 className="text-base sm:text-lg lg:text-xl font-bold text-pink-700 break-all">
                             {o._id}
                           </h3>
                           <StatusBadge status={o.status} />
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm">
                           <div className="flex items-center gap-2 min-w-0">
-                            <User className="w-4 h-4 text-gray-400 shrink-0" />
+                            <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 shrink-0" />
                             <span className="text-gray-700 truncate">
                               {o.customer.name}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Phone className="w-4 h-4 text-gray-400" />
+                            <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 shrink-0" />
                             <span className="text-gray-700">
                               {o.customer.phone}
                             </span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-gray-400" />
-                            <span className="text-gray-700">
+                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gray-400 shrink-0" />
+                            <span className="text-gray-700 truncate">
                               {bnDate(o.createdAt)}
                             </span>
                           </div>
@@ -341,11 +339,11 @@ export default function OrdersPage() {
 
                       {/* Amount + actions */}
                       <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="text-right">
-                          <p className="text-xs sm:text-sm text-gray-500 mb-1">
+                        <div className="text-left sm:text-right">
+                          <p className="text-xs text-gray-500 mb-1">
                             Grand Total
                           </p>
-                          <p className="text-xl sm:text-2xl font-bold text-emerald-600">
+                          <p className="text-lg sm:text-xl lg:text-2xl font-bold text-pink-600">
                             ৳{o.totals.grandTotal}
                           </p>
                         </div>
@@ -354,18 +352,18 @@ export default function OrdersPage() {
                             setSelected(o);
                             setOpenDetails(true);
                           }}
-                          className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition"
+                          className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 lg:py-3 rounded-xl bg-pink-600 text-white font-semibold hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition text-sm"
                         >
-                          <Eye className="w-5 h-5" />
+                          <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                           <span className="hidden sm:inline">Details</span>
                         </button>
                       </div>
                     </div>
 
                     {/* Summary line */}
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                      <p className="text-sm text-gray-600 flex items-center gap-2">
-                        <Package className="w-4 h-4" />
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
+                      <p className="text-xs sm:text-sm text-gray-600 flex items-center gap-2 flex-wrap">
+                        <Package className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                         {o.lines.length} item{o.lines.length > 1 ? "s" : ""} •
                         Subtotal ৳{o.totals.subTotal} • Shipping ৳
                         {o.totals.shipping}
@@ -381,18 +379,18 @@ export default function OrdersPage() {
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    className="px-4 py-2 rounded-xl border border-emerald-200 text-gray-700 hover:bg-emerald-50 disabled:opacity-50"
+                    className="px-3 sm:px-4 py-2 rounded-xl border border-pink-200 text-gray-700 hover:bg-pink-50 disabled:opacity-50 text-sm"
                   >
                     Previous
                   </button>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-xs sm:text-sm text-gray-600">
                     Page <span className="font-semibold">{page}</span> of{" "}
                     <span className="font-semibold">{totalPages}</span>
                   </span>
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    className="px-4 py-2 rounded-xl border border-emerald-200 text-gray-700 hover:bg-emerald-50 disabled:opacity-50"
+                    className="px-3 sm:px-4 py-2 rounded-xl border border-pink-200 text-gray-700 hover:bg-pink-50 disabled:opacity-50 text-sm"
                   >
                     Next
                   </button>
@@ -400,12 +398,12 @@ export default function OrdersPage() {
               )}
             </div>
           ) : (
-            <div className="bg-white rounded-2xl shadow-sm border border-emerald-100 p-12 text-center">
-              <ClipboardList className="w-16 h-16 text-emerald-300 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-8 sm:p-12 text-center">
+              <ClipboardList className="w-12 h-12 sm:w-16 sm:h-16 text-pink-300 mx-auto mb-4" />
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
                 No orders found
               </h3>
-              <p className="text-gray-600">
+              <p className="text-sm sm:text-base text-gray-600">
                 Try adjusting your filters or search
               </p>
             </div>
@@ -415,35 +413,35 @@ export default function OrdersPage() {
         {/* Details modal */}
         {openDetails && selected && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-3xl my-8 border border-emerald-100">
-              <div className="sticky top-0 bg-white border-b border-emerald-100 px-6 py-4 flex items-center justify-between rounded-t-3xl">
-                <div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-3xl my-8 border border-pink-100 max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-white border-b border-pink-100 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between rounded-t-2xl sm:rounded-t-3xl z-10">
+                <div className="flex-1 min-w-0 pr-2">
+                  <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
                     Order Details
                   </h2>
-                  <p className="text-sm text-emerald-600 break-all">
+                  <p className="text-xs sm:text-sm text-pink-600 break-all">
                     {selected._id}
                   </p>
                 </div>
                 <button
                   onClick={() => setOpenDetails(false)}
-                  className="p-2 hover:bg-emerald-50 rounded-xl transition"
+                  className="p-2 hover:bg-pink-50 rounded-xl transition flex-shrink-0"
                 >
-                  <X className="w-6 h-6 text-gray-600" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" />
                 </button>
               </div>
 
-              <div className="p-6 space-y-6">
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
                 {/* Customer */}
-                <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-5 border border-emerald-100">
-                  <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <User className="w-5 h-5 text-emerald-600" />
+                <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-pink-100">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+                    <User className="w-4 h-4 sm:w-5 sm:h-5 text-pink-600" />
                     Customer
                   </h3>
-                  <div className="grid gap-3 text-sm">
+                  <div className="grid gap-2 sm:gap-3 text-xs sm:text-sm">
                     <div className="flex justify-between gap-3">
                       <span className="text-gray-600">Name:</span>
-                      <span className="font-semibold text-gray-800">
+                      <span className="font-semibold text-gray-800 text-right">
                         {selected.customer.name}
                       </span>
                     </div>
@@ -455,7 +453,7 @@ export default function OrdersPage() {
                     </div>
                     <div className="flex justify-between gap-3">
                       <span className="text-gray-600">Area:</span>
-                      <span className="font-semibold text-gray-800">
+                      <span className="font-semibold text-gray-800 text-right">
                         {selected.customer.area}
                       </span>
                     </div>
@@ -470,15 +468,15 @@ export default function OrdersPage() {
 
                 {/* Lines */}
                 <div>
-                  <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <Package className="w-5 h-5 text-emerald-600" />
+                  <h3 className="text-sm sm:text-base font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+                    <Package className="w-4 h-4 sm:w-5 sm:h-5 text-pink-600" />
                     Items
                   </h3>
                   <div className="space-y-3">
                     {selected.lines.map((l, idx) => (
                       <div
                         key={`${l.productId}-${idx}`}
-                        className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl border border-gray-200"
+                        className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-xl border border-gray-200"
                       >
                         {l.image ? (
                           <Image
@@ -487,7 +485,7 @@ export default function OrdersPage() {
                             width={320}
                             height={240}
                             sizes="(max-width: 768px) 64px, 80px"
-                            className="w-16 h-16 rounded-lg object-cover"
+                            className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg object-cover flex-shrink-0"
                             onError={(e) =>
                               ((
                                 e.currentTarget as HTMLImageElement
@@ -495,25 +493,25 @@ export default function OrdersPage() {
                             }
                           />
                         ) : (
-                          <div className="w-16 h-16 rounded-lg bg-emerald-100" />
+                          <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-lg bg-pink-100 flex-shrink-0" />
                         )}
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-800 line-clamp-1">
+                          <h4 className="font-semibold text-gray-800 line-clamp-1 text-xs sm:text-sm">
                             {l.title}
                           </h4>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-xs text-gray-600">
                             ৳{l.price} × {l.qty}
                           </p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-lg font-bold text-emerald-600">
+                        <div className="text-right flex-shrink-0">
+                          <p className="text-sm sm:text-base lg:text-lg font-bold text-pink-600">
                             ৳{l.price * l.qty}
                           </p>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="mt-4 pt-4 border-t-2 border-emerald-200 grid grid-cols-2 gap-3 text-sm">
+                  <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t-2 border-pink-200 space-y-2 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Subtotal</span>
                       <span className="font-semibold">
@@ -526,11 +524,11 @@ export default function OrdersPage() {
                         ৳{selected.totals.shipping}
                       </span>
                     </div>
-                    <div className="col-span-2 flex justify-between text-base">
+                    <div className="flex justify-between text-sm sm:text-base pt-2 border-t border-pink-100">
                       <span className="font-bold text-gray-800">
                         Grand Total
                       </span>
-                      <span className="text-2xl font-bold text-emerald-600">
+                      <span className="text-xl sm:text-2xl font-bold text-pink-600">
                         ৳{selected.totals.grandTotal}
                       </span>
                     </div>
@@ -538,16 +536,18 @@ export default function OrdersPage() {
                 </div>
 
                 {/* Update Status */}
-                <div className="bg-gradient-to-r from-emerald-50 to-green-50 rounded-2xl p-5 border border-emerald-100">
-                  <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <AlertCircle className="w-5 h-5 text-emerald-600" />
+                <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-pink-100">
+                  <h3 className="text-sm sm:text-base font-bold text-gray-800 mb-3 sm:mb-4 flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-pink-600" />
                     Update Status
                   </h3>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm text-gray-600">Current:</span>
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <span className="text-xs sm:text-sm text-gray-600">
+                      Current:
+                    </span>
                     <StatusBadge status={selected.status} />
                   </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
                     {(
                       [
                         "PENDING",
@@ -559,11 +559,11 @@ export default function OrdersPage() {
                     ).map((s) => {
                       const disabled = selected.status === s || isUpdating;
                       const base =
-                        "px-3 py-2.5 sm:px-4 sm:py-3 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 border";
+                        "px-2 py-2 sm:px-3 sm:py-2.5 lg:px-4 lg:py-3 rounded-xl text-xs sm:text-sm font-semibold transition flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 border";
                       const active =
                         "bg-gray-200 text-gray-500 border-gray-200 cursor-not-allowed";
                       const ready =
-                        "bg-white border-emerald-200 text-emerald-700 hover:bg-emerald-100";
+                        "bg-white border-pink-200 text-pink-700 hover:bg-pink-100";
                       const Icon = STATUS_UI[s].Icon;
                       return (
                         <button
@@ -572,8 +572,8 @@ export default function OrdersPage() {
                           disabled={disabled}
                           className={`${base} ${disabled ? active : ready}`}
                         >
-                          <Icon className="w-4 h-4" />
-                          <span className="hidden xs:inline">
+                          <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          <span className="text-[10px] sm:text-xs lg:text-sm">
                             {STATUS_UI[s].label}
                           </span>
                         </button>
@@ -581,9 +581,11 @@ export default function OrdersPage() {
                     })}
                   </div>
                   {isUpdating && (
-                    <div className="mt-4 flex items-center justify-center gap-2 text-emerald-600">
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      <span className="text-sm font-medium">Updating...</span>
+                    <div className="mt-3 sm:mt-4 flex items-center justify-center gap-2 text-pink-600">
+                      <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                      <span className="text-xs sm:text-sm font-medium">
+                        Updating...
+                      </span>
                     </div>
                   )}
                 </div>
@@ -592,9 +594,9 @@ export default function OrdersPage() {
                 <div className="flex items-center justify-end">
                   <button
                     onClick={() => setPendingDelete(selected._id)}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 text-red-700 hover:bg-red-100 border border-red-100 font-semibold transition"
+                    className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-red-50 text-red-700 hover:bg-red-100 border border-red-100 font-semibold transition text-xs sm:text-sm"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     Delete Order
                   </button>
                 </div>
@@ -643,9 +645,7 @@ export default function OrdersPage() {
             />
           </div>
         )}
-      </div>3
-
+      </div>
     </>
-    
   );
 }

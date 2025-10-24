@@ -17,7 +17,7 @@ export default function DashboardPage() {
   const stats = [
     {
       title: "Total Revenue",
-      value: "৳২,৪৫,৬৭৮",
+      value: "৳2,45,365",
       change: "+12.5%",
       isPositive: true,
       icon: DollarSign,
@@ -25,7 +25,7 @@ export default function DashboardPage() {
     },
     {
       title: "Total Orders",
-      value: "১,২৩৪",
+      value: "1,235",
       change: "+8.2%",
       isPositive: true,
       icon: ShoppingCart,
@@ -33,7 +33,7 @@ export default function DashboardPage() {
     },
     {
       title: "Total Products",
-      value: "৫৬৭",
+      value: "567",
       change: "+5.1%",
       isPositive: true,
       icon: Package,
@@ -41,7 +41,7 @@ export default function DashboardPage() {
     },
     {
       title: "Total Customers",
-      value: "৮৯০",
+      value: "890",
       change: "-2.4%",
       isPositive: false,
       icon: Users,
@@ -53,48 +53,48 @@ export default function DashboardPage() {
     {
       id: "#ORD-1234",
       customer: "Ayesha Rahman",
-      amount: "৳১,২৫০",
+      amount: "৳1,1250",
       status: "pending",
-      time: "২ ঘন্টা আগে",
+      time: "2 hours ago",
     },
     {
       id: "#ORD-1233",
       customer: "Nadia Sultana",
-      amount: "৳৮৫০",
+      amount: "৳850",
       status: "delivered",
-      time: "৫ ঘন্টা আগে",
+      time: "5 hours ago",
     },
     {
       id: "#ORD-1232",
       customer: "Tasnim Jahan",
-      amount: "৳২,১০০",
+      amount: "৳2250",
       status: "processing",
-      time: "১ দিন আগে",
+      time: "1 day ago",
     },
     {
       id: "#ORD-1231",
       customer: "Sadia Khan",
-      amount: "৳৬৫০",
+      amount: "৳650",
       status: "cancelled",
-      time: "১ দিন আগে",
+      time: "1 day ago",
     },
     {
       id: "#ORD-1230",
       customer: "Rima Ahmed",
-      amount: "৳১,৪৫০",
+      amount: "৳1,450",
       status: "delivered",
-      time: "২ দিন আগে",
+      time: "2 days ago",
     },
   ];
 
   const topProducts = [
-    { name: "Matte Lipstick Set", sold: 450, revenue: "৳১৮,০০০", image: "💄" },
-    { name: "Premium Face Serum", sold: 320, revenue: "৳৩৮,৪০০", image: "✨" },
-    { name: "Luxury Perfume", sold: 280, revenue: "৳৯৮,০০০", image: "🌸" },
+    { name: "Matte Lipstick Set", sold: 450, revenue: "৳18,০০০", image: "💄" },
+    { name: "Premium Face Serum", sold: 320, revenue: "৳38,৪০০", image: "✨" },
+    { name: "Luxury Perfume", sold: 280, revenue: "৳98,০০০", image: "🌸" },
     {
       name: "Eye Shadow Palette",
       sold: 150,
-      revenue: "৳৮২,৫০০",
+      revenue: "৳85,5০০",
       image: "🎨",
     },
   ];

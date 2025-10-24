@@ -19,9 +19,22 @@ import {
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 } from "@/services/categories.api";
-import type { Category, CreateCategoryDTO } from "@/types/category";
+import type {
+  Category as AdminCategory,
+  CreateCategoryDTO,
+} from "@/types/category";
 import { isActive } from "@/types/category";
 import UploadImage, { UploadValue } from "@/components/UploadImage";
+
+/** ---------- Runtime helpers: handle name/title mixed shapes ---------- */
+type AnyCategory = AdminCategory & { title?: string }; // API কিছু ক্ষেত্রে title দিচ্ছে
+const getName = (c: AnyCategory) => (c.name ?? c.title ?? "").trim();
+const getSlug = (c: AnyCategory) => (c.slug ?? "").trim();
+const getDesc = (c: AnyCategory) => (c.description ?? "").trim();
+
+function safeLower(s?: string) {
+  return (s ?? "").toLowerCase();
+}
 
 function ConfirmDialog({
   open,
@@ -74,7 +87,7 @@ function ConfirmDialog({
 export default function CategoriesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editing, setEditing] = useState<Category | null>(null);
+  const [editing, setEditing] = useState<AnyCategory | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -89,25 +102,39 @@ export default function CategoriesPage() {
   const [updateCategory, { isLoading: updating }] = useUpdateCategoryMutation();
   const [deleteCategory, { isLoading: deleting }] = useDeleteCategoryMutation();
 
-  const categories = useMemo(() => data?.data ?? [], [data]);
+  const categories = useMemo<AnyCategory[]>(
+    () => ((data as any)?.data ?? []) as AnyCategory[],
+    [data]
+  );
+
   const filtered = useMemo(() => {
-    const q = searchQuery.toLowerCase();
-    return categories.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.slug.toLowerCase().includes(q) ||
-        (c.description?.toLowerCase().includes(q) ?? false)
-    );
+    const q = safeLower(searchQuery);
+    return categories.filter((c) => {
+      const nameLower = safeLower(getName(c));
+      const slugLower = safeLower(getSlug(c));
+      const descLower = safeLower(getDesc(c));
+      return (
+        nameLower.includes(q) ||
+        slugLower.includes(q) ||
+        (descLower.includes(q) ?? false)
+      );
+    });
   }, [categories, searchQuery]);
 
-  const openModal = (cat?: Category) => {
+  const openModal = (cat?: AnyCategory) => {
     if (cat) {
+      const n = getName(cat);
       setEditing(cat);
       setFormData({
-        name: cat.name,
-        slug: cat.slug,
+        name: n,
+        slug:
+          getSlug(cat) ||
+          n
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/(^-|-$)/g, ""),
         image: cat.image || "",
-        description: cat.description || "",
+        description: getDesc(cat),
         isActive: isActive(cat),
       });
     } else {
@@ -129,10 +156,11 @@ export default function CategoriesPage() {
   };
 
   const handleNameChange = (name: string) => {
+    const safe = name ?? "";
     setFormData((s) => ({
       ...s,
-      name,
-      slug: name
+      name: safe,
+      slug: safe
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, ""),
@@ -142,7 +170,7 @@ export default function CategoriesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload: CreateCategoryDTO = {
-      name: formData.name,
+      name: formData.name, // BE এইটা নেয়
       slug: formData.slug,
       image: formData.image || undefined,
       description: formData.description || undefined,
@@ -151,14 +179,17 @@ export default function CategoriesPage() {
 
     try {
       if (editing) {
-        await updateCategory({ id: editing._id, body: payload }).unwrap();
+        await updateCategory({
+          id: (editing as any)._id,
+          body: payload,
+        }).unwrap();
         toast.success("Category updated successfully");
       } else {
         await createCategory(payload).unwrap();
         toast.success("Category created successfully");
       }
       closeModal();
-    } catch (err: unknown) {
+    } catch {
       toast.error("Operation failed");
     }
   };
@@ -250,61 +281,64 @@ export default function CategoriesPage() {
             </div>
           ) : filtered.length ? (
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filtered.map((cat) => (
-                <div
-                  key={cat._id}
-                  className="bg-white rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition overflow-hidden group flex flex-col"
-                >
-                  <div className="relative h-40 bg-gradient-to-br from-pink-100 to-rose-100">
-                    {isValidImageUrl(cat.image) ? (
-                      <Image
-                        src={cat.image!}
-                        alt={cat.name}
-                        width={600}
-                        height={400}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <ImageIcon className="w-16 h-16 text-pink-200" />
+              {filtered.map((cat) => {
+                const displayName = getName(cat);
+                return (
+                  <div
+                    key={(cat as any)._id}
+                    className="bg-white rounded-2xl border border-pink-100 shadow-sm hover:shadow-md transition overflow-hidden group flex flex-col"
+                  >
+                    <div className="relative h-40 bg-gradient-to-br from-pink-100 to-rose-100">
+                      {isValidImageUrl(cat.image) ? (
+                        <Image
+                          src={cat.image!}
+                          alt={displayName || "Category"}
+                          width={600}
+                          height={400}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ImageIcon className="w-16 h-16 text-pink-200" />
+                        </div>
+                      )}
+                      <div className="absolute top-3 right-3">
+                        <span
+                          className={`px-3 py-1 text-xs font-bold rounded-full ${
+                            (cat as any).status === "ACTIVE"
+                              ? "bg-pink-600 text-white"
+                              : "bg-gray-400 text-white"
+                          }`}
+                        >
+                          {(cat as any).status}
+                        </span>
                       </div>
-                    )}
-                    <div className="absolute top-3 right-3">
-                      <span
-                        className={`px-3 py-1 text-xs font-bold rounded-full ${
-                          cat.status === "ACTIVE"
-                            ? "bg-pink-600 text-white"
-                            : "bg-gray-400 text-white"
-                        }`}
-                      >
-                        {cat.status}
-                      </span>
+                    </div>
+                    <div className="p-5 flex flex-col flex-grow">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">
+                        {displayName || "Untitled"}
+                      </h3>
+                      <p className="text-sm text-pink-700/70 font-medium mb-3 line-clamp-2">
+                        {getDesc(cat)}
+                      </p>
+                      <div className="mt-auto flex gap-2 flex-wrap">
+                        <button
+                          onClick={() => openModal(cat)}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-pink-50 text-pink-700 border border-pink-100 hover:bg-pink-100 transition text-sm"
+                        >
+                          <Edit2 className="w-4 h-4" /> Edit
+                        </button>
+                        <button
+                          onClick={() => setConfirmId((cat as any)._id)}
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 text-red-700 border border-red-100 hover:bg-red-100 transition text-sm"
+                        >
+                          <Trash2 className="w-4 h-4" /> Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="p-5 flex flex-col flex-grow">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-1">
-                      {cat.name}
-                    </h3>
-                    <p className="text-sm text-pink-700/70 font-medium mb-3 line-clamp-2">
-                      {cat.description}
-                    </p>
-                    <div className="mt-auto flex gap-2 flex-wrap">
-                      <button
-                        onClick={() => openModal(cat)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-pink-50 text-pink-700 border border-pink-100 hover:bg-pink-100 transition text-sm"
-                      >
-                        <Edit2 className="w-4 h-4" /> Edit
-                      </button>
-                      <button
-                        onClick={() => setConfirmId(cat._id)}
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 text-red-700 border border-red-100 hover:bg-red-100 transition text-sm"
-                      >
-                        <Trash2 className="w-4 h-4" /> Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="bg-white rounded-2xl border border-pink-100 p-12 text-center shadow-sm">

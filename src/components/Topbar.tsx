@@ -131,14 +131,18 @@ export default function Topbar() {
                 value={cat}
                 onChange={(e) => setCat(e.target.value)}
                 disabled={isLoading}
-                className="px-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-100 transition-all bg-white/50 min-w-[160px]"
+                className="px-4 py-3.5 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 bg-pink-200 text-gray-900"
               >
-                <option value="">
+                <option value="" className="text-pink-700 bg-pink-50">
                   {isLoading ? "Loading..." : "All categories"}
                 </option>
                 {cats.map((c) => (
-                  <option key={c._id} value={c.slug}>
-                    {c.title}
+                  <option
+                    key={c._id}
+                    value={c.slug}
+                    className="text-pink-700 bg-pink-200 hover:bg-pink-100 focus:bg-pink-100 focus:text-pink-800"
+                  >
+                    {c.name}
                   </option>
                 ))}
               </select>
@@ -195,30 +199,34 @@ export default function Topbar() {
         </div>
 
         {/* Mobile Search */}
-        <div className="md:hidden pb-4">
+        <div className="hidden md:hidden pb-4">
           <form onSubmit={onSearch} className="space-y-2">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-500" />
               <input
                 placeholder="Search products..."
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 focus:ring-4 focus:ring-pink-100 transition-all bg-white/50"
               />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-pink-500" />
             </div>
             <div className="flex gap-2">
               <select
                 value={cat}
                 onChange={(e) => setCat(e.target.value)}
                 disabled={isLoading}
-                className="flex-1 px-4 py-2.5 border-2 border-pink-200 rounded-xl focus:outline-none focus:border-pink-500 transition-all bg-white/50"
+                className="px-4 py-3.5 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 bg-pink-200 "
               >
                 <option value="">
                   {isLoading ? "Loading..." : "All categories"}
                 </option>
                 {cats.map((c) => (
-                  <option key={c._id} value={c.slug}>
-                    {c.title}
+                  <option
+                    key={c._id}
+                    value={c.slug}
+                    className="bg-pink-200 text-pink-600"
+                  >
+                    {c?.name}
                   </option>
                 ))}
               </select>

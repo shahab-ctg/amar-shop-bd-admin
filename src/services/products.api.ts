@@ -1,93 +1,121 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "./base";
-import type {
-  Product,
-  CreateProductDTO,
-  UpdateProductDTO,
-  ProductListQuery,
-} from "@/types/product";
-import type { ApiOk, Paginated } from "@/types";
+// src/services/products.api.ts
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-function buildQuery(q: ProductListQuery): string {
-  const params = new URLSearchParams();
-  if (q.page) params.set("page", String(q.page));
-  if (q.limit) params.set("limit", String(q.limit));
-  if (q.q?.trim()) params.set("q", q.q.trim());
-  if (q.category) params.set("category", q.category);
-  if (q.tag) params.set("tag", q.tag);
-  if (q.discounted) params.set("discounted", q.discounted);
-  const s = params.toString();
-  return s ? `?${s}` : "";
-}
+export type SizeDTO = { unit?: "ml" | "g" | "pcs"; value?: number };
+export type VariantDTO = {
+  sku: string;
+  shade?: string;
+  colorHex?: string;
+  size?: SizeDTO;
+  price?: number;
+  compareAtPrice?: number;
+  stock?: number;
+  image?: string;
+};
+
+export type AdminProductDTO = {
+  title?: string;
+  slug?: string;
+  price?: number;
+  stock?: number;
+  image?: string;
+  images?: string[];
+  compareAtPrice?: number;
+  isDiscounted?: boolean;
+  featured?: boolean;
+  status?: "ACTIVE" | "DRAFT" | "HIDDEN";
+  categorySlug?: string;
+  brand?: string;
+  description?: string;
+  tagSlugs?: string[];
+  // cosmetics...
+  shade?: string;
+  colorHex?: string;
+  size?: SizeDTO;
+  variants?: VariantDTO[];
+  skinType?: string[];
+  hairType?: string[];
+  concerns?: string[];
+  ingredients?: string[];
+  allergens?: string[];
+  claims?: string[];
+  howToUse?: string;
+  caution?: string;
+  benefits?: string[];
+  gender?: "unisex" | "female" | "male";
+  origin?: string;
+  expiry?: string;
+  batchNo?: string;
+};
+
+// ✅ Safe base URL (no runtime throw)
+const baseUrl =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_BASE ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:5000/api/v1";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  baseQuery,
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    credentials: "include",
+    prepareHeaders: (headers) => {
+      const token =
+        typeof window !== "undefined"
+          ? localStorage.getItem("accessToken") ||
+            localStorage.getItem("token") ||
+            localStorage.getItem("authToken")
+          : null;
+      if (token) headers.set("Authorization", `Bearer ${token}`);
+      headers.set("content-type", "application/json");
+      return headers;
+    },
+  }),
   tagTypes: ["Products"],
   endpoints: (builder) => ({
+    // ⚙️ GET /products?q=...&category=...
     listProducts: builder.query<
-      ApiOk<Paginated<Product>>,
-      ProductListQuery | void
+      any,
+      { page?: number; q?: string; category?: string }
     >({
-      query: (q) => `/products${buildQuery(q ?? { page: 1, limit: 20 })}`,
-      providesTags: (result) =>
-        result?.data.items
-          ? [
-              ...result.data.items.map((p) => ({
-                type: "Products" as const,
-                id: p._id,
-              })),
-              { type: "Products" as const, id: "LIST" },
-            ]
-          : [{ type: "Products" as const, id: "LIST" }],
+      query: (p) => {
+        const usp = new URLSearchParams();
+        if (p?.page) usp.set("page", String(p.page));
+        if (p?.q) usp.set("q", p.q);
+        if (p?.category) usp.set("category", p.category);
+        return { url: `/products?${usp.toString()}`, method: "GET" };
+      },
+      providesTags: ["Products"],
     }),
 
-    getProductBySlug: builder.query<ApiOk<Product>, string>({
-      query: (slug) => `/products/${slug}`,
-      providesTags: (r) =>
-        r
-          ? [{ type: "Products", id: r.data._id }]
-          : [{ type: "Products", id: "LIST" }],
+    // ✅ POST /products
+    createProduct: builder.mutation<any, AdminProductDTO>({
+      query: (body) => ({ url: `/admin/products`, method: "POST", body }),
+      invalidatesTags: ["Products"],
     }),
 
-    createProduct: builder.mutation<
-      ApiOk<{ id: string; slug: string }>,
-      CreateProductDTO
-    >({
-      query: (body) => ({ url: "/admin/products", method: "POST", body }),
-      invalidatesTags: [{ type: "Products", id: "LIST" }],
-    }),
-
-    updateProduct: builder.mutation<
-      ApiOk<Product>,
-      { id: string; body: UpdateProductDTO }
-    >({
-      query: ({ id, body }) => ({
+    // ✅ PATCH /products/:id
+    updateProduct: builder.mutation<any, { id: string } & AdminProductDTO>({
+      query: ({ id, ...body }) => ({
         url: `/admin/products/${id}`,
         method: "PATCH",
         body,
       }),
-      invalidatesTags: (r) =>
-        r
-          ? [
-              { type: "Products", id: r.data._id },
-              { type: "Products", id: "LIST" },
-            ]
-          : [{ type: "Products", id: "LIST" }],
+      invalidatesTags: ["Products"],
     }),
 
-    deleteProduct: builder.mutation<ApiOk<{ id: string }>, string>({
+    // ✅ DELETE /products/:id
+    deleteProduct: builder.mutation<any, string>({
       query: (id) => ({ url: `/admin/products/${id}`, method: "DELETE" }),
-      invalidatesTags: [{ type: "Products", id: "LIST" }],
+      invalidatesTags: ["Products"],
     }),
   }),
 });
 
-
-
 export const {
+  // 🔁 Friendly hook names (পেজে এগুলোই ব্যবহার করুন)
   useListProductsQuery,
-  useGetProductBySlugQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
