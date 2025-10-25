@@ -3,6 +3,7 @@ export type CategoryStatus = "ACTIVE" | "HIDDEN";
 export interface Category {
   _id: string;
   name: string;
+  title?: string;
   slug: string;
   image?: string;
   description?: string;

@@ -39,7 +39,7 @@ const bnDate = (iso?: string) =>
       })
     : "";
 
-/** Status badge config (UPPERCASE) */
+
 const STATUS_UI: Record<
   OrderStatus,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -90,7 +90,7 @@ function StatusBadge({ status }: { status: OrderStatus }) {
   );
 }
 
-/** Simple confirm dialog */
+
 function Confirm({
   open,
   title,
@@ -216,7 +216,7 @@ export default function OrdersPage() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       toast.error(String(e?.data?.message || e?.data?.code || "Delete failed"));
-      // eslint-disable-next-line no-console
+      
       console.error(e);
     }
   };
@@ -244,8 +244,8 @@ export default function OrdersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Header */}
           <div className="mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 mb-2 flex items-center gap-2 sm:gap-3">
-              <ClipboardList className="w-7 h-7 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-pink-600" />
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#167389] to-[#167389] mb-2 flex items-center gap-2 sm:gap-3">
+              <ClipboardList className="w-7 h-7 sm:w-9 sm:h-9 lg:w-10 lg:h-10 text-[#167389]" />
               Orders
             </h1>
             <p className="text-sm sm:text-base text-gray-600">
@@ -257,7 +257,7 @@ export default function OrdersPage() {
           <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-4 sm:p-6 mb-6">
             <div className="flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center">
               <div className="relative flex-1">
-                <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-pink-500" />
+                <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-black" />
                 <input
                   type="text"
                   placeholder="Search by order ID or customer..."
@@ -272,7 +272,7 @@ export default function OrdersPage() {
                   setStatusFilter(e.target.value as OrderStatus | "");
                   setPage(1);
                 }}
-                className="px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400 transition md:w-64 text-sm sm:text-base"
+                className="px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-[#167389] focus:outline-none focus:ring-2 text-[#167389] focus:ring-pink-300 focus:border-pink-400 transition md:w-64 text-sm sm:text-base"
               >
                 <option value="">All Statuses</option>
                 <option value="PENDING">Pending</option>
@@ -310,7 +310,7 @@ export default function OrdersPage() {
                       {/* Info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 sm:gap-3 mb-3 flex-wrap">
-                          <h3 className="text-base sm:text-lg lg:text-xl font-bold text-pink-700 break-all">
+                          <h3 className="text-base sm:text-lg lg:text-xl font-bold text-[#167389] break-all">
                             {o._id}
                           </h3>
                           <StatusBadge status={o.status} />
@@ -343,7 +343,7 @@ export default function OrdersPage() {
                           <p className="text-xs text-gray-500 mb-1">
                             Grand Total
                           </p>
-                          <p className="text-lg sm:text-xl lg:text-2xl font-bold text-pink-600">
+                          <p className="text-lg sm:text-xl lg:text-2xl font-bold text-[#167389]">
                             ৳{o.totals.grandTotal}
                           </p>
                         </div>
@@ -352,7 +352,7 @@ export default function OrdersPage() {
                             setSelected(o);
                             setOpenDetails(true);
                           }}
-                          className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 lg:py-3 rounded-xl bg-pink-600 text-white font-semibold hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition text-sm"
+                          className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 lg:py-3 rounded-xl bg-[#167389] text-white font-semibold hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition text-sm"
                         >
                           <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
                           <span className="hidden sm:inline">Details</span>

@@ -15,7 +15,7 @@ export default function Home() {
         <div className="text-center">
           {/* Hero Section with Animation */}
           <div className="mb-8 sm:mb-12 animate-fade-in">
-            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 rounded-2xl shadow-2xl mb-6 transform hover:scale-110 transition-transform duration-300 animate-float">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-[#167389] to-[#167389] rounded-2xl shadow-2xl mb-6 transform hover:scale-110 transition-transform duration-300 animate-float">
               <svg
                 className="w-9 h-9 sm:w-11 sm:h-11 text-white"
                 fill="none"
@@ -31,7 +31,7 @@ export default function Home() {
               </svg>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 mb-3 sm:mb-4 animate-slide-up">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#167389] to-[#167389] mb-3 sm:mb-4 animate-slide-up">
               Amar Shop Admin
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-2 animate-slide-up animation-delay-200">
@@ -46,7 +46,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto mb-8 sm:mb-12">
             {/* Users Card */}
             <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl p-5 sm:p-6 border border-pink-100 transform hover:-translate-y-2 transition-all duration-300 animate-slide-up animation-delay-400">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-pink-400 to-rose-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#167389] to-[#167389] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
                 <svg
                   className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                   fill="none"
@@ -71,7 +71,7 @@ export default function Home() {
 
             {/* Products Card */}
             <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl p-5 sm:p-6 border border-rose-100 transform hover:-translate-y-2 transition-all duration-300 animate-slide-up animation-delay-600">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-rose-400 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#167389] to-[#167389] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
                 <svg
                   className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                   fill="none"
@@ -96,7 +96,7 @@ export default function Home() {
 
             {/* Analytics Card */}
             <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl p-5 sm:p-6 border border-purple-100 transform hover:-translate-y-2 transition-all duration-300 animate-slide-up animation-delay-800 sm:col-span-2 lg:col-span-1">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#167389] to-[#167389] rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md">
                 <svg
                   className="w-6 h-6 sm:w-7 sm:h-7 text-white"
                   fill="none"
@@ -122,7 +122,7 @@ export default function Home() {
 
           {/* Call to Action Button */}
           <Link href={"/login"}>
-            <button className="group relative inline-flex items-center justify-center gap-2 mt-4 sm:mt-8 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:via-rose-600 hover:to-purple-700 text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-1000 text-sm sm:text-base">
+            <button className="group relative inline-flex items-center justify-center gap-2 mt-4 sm:mt-8 bg-gradient-to-r from-[#167389] to-[#167389] hover:from-pink-600 hover:via-rose-600 hover:to-purple-700 text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-1000 text-sm sm:text-base">
               <span>Get Started</span>
               <svg
                 className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"

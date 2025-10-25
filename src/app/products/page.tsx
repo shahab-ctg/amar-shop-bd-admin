@@ -768,7 +768,7 @@ export default function ProductsPage() {
                   <button
                     type="submit"
                     disabled={isCreating || isUpdating}
-                    className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:from-pink-700 hover:to-purple-700 disabled:opacity-50 inline-flex items-center justify-center gap-2 transition shadow-md"
+                    className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-[#167389] to-[#167389] text-white font-semibold hover:from-pink-700 hover:to-purple-700 disabled:opacity-50 inline-flex items-center justify-center gap-2 transition shadow-md"
                   >
                     {isCreating || isUpdating ? (
                       <>

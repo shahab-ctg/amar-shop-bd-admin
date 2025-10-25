@@ -1,26 +1,25 @@
 // components/Topbar.tsx
 "use client";
 
+import { logout } from "@/features/auth/auth.slice";
+import { useListCategoriesQuery } from "@/services/categories.api";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import clsx from "clsx";
+import {
+  ClipboardList,
+  FolderTree,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Package,
+  Phone,
+  Search,
+  Sparkles,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { logout } from "@/features/auth/auth.slice";
-import { useListCategoriesQuery } from "@/services/categories.api";
-import clsx from "clsx";
-import {
-  Search,
-  ShoppingBag,
-  Phone,
-  LogOut,
-  Menu,
-  X,
-  Sparkles,
-  Package,
-  FolderTree,
-  LayoutDashboard,
-  ClipboardList,
-} from "lucide-react";
 
 const NAV = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -136,10 +135,10 @@ export default function Topbar() {
     placeholder:text-[#167389]
     shadow-sm hover:shadow-md transition-all
     text-sm sm:text-base
-    relative z-[50]  /* ✅ ensures dropdown appears on top */
+    relative z-[50] 
   "
                 style={{
-                  WebkitAppearance: "menulist", // ✅ ensures visibility on Safari/Chrome
+                  WebkitAppearance: "menulist", 
                   color: "#167389",
                 }}
               >
@@ -162,11 +161,11 @@ export default function Topbar() {
         font-medium sm:text-base text-sm
       "
                     style={{
-                      backgroundColor: "white", // ✅ fixes invisible options on Windows
+                      backgroundColor: "white", 
                       color: "#167389",
                     }}
                   >
-                    {c.name}
+                    {c?.title}
                   </option>
                 ))}
               </select>

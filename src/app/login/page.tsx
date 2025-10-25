@@ -44,11 +44,11 @@ export default function AdminLoginPage() {
       const token = data.data.accessToken;
       if (!token) throw new Error("No token received");
 
-      // ✅ Redux ও localStorage-এ সংরক্ষণ
+      //  Redux ও localStorage-এ সংরক্ষণ
       dispatch(setToken(token));
       localStorage.setItem("accessToken", token);
 
-      // ✅ Redirect
+    
       router.push("/dashboard");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -61,16 +61,16 @@ export default function AdminLoginPage() {
 
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 flex items-center justify-center p-4">
+    <main className="min-h-screen bg-white flex items-center justify-center p-4">
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-pulse" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-100 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-pulse" />
         <div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-pulse"
+          className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-100 rounded-full mix-blend-multiply blur-3xl opacity-40 animate-pulse"
           style={{ animationDelay: "700ms" }}
         />
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 w-80 h-80 bg-rose-300 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse"
           style={{ animationDelay: "1000ms" }}
         />
       </div>
@@ -79,16 +79,14 @@ export default function AdminLoginPage() {
       <div className="relative w-full max-w-md">
         {/* Logo / Brand */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-pink-500 via-rose-500 to-purple-600 rounded-2xl shadow-2xl mb-4 transform hover:scale-110 transition-transform duration-300">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#167389] to-[#167389] rounded-2xl shadow-2xl mb-4 transform hover:scale-110 transition-transform duration-300">
             <Sparkles className="w-10 h-10 text-white" strokeWidth={2.5} />
           </div>
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 mb-2">
+          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#167389] to-[#167389] mb-2">
             Amar Shop
           </h1>
-          <p className="text-rose-700/90 font-medium text-lg">
-            Admin Dashboard
-          </p>
-          <div className="flex items-center justify-center gap-2 mt-2 text-sm text-pink-600">
+          <p className="text-[#167389] font-medium text-lg">Admin Dashboard</p>
+          <div className="flex items-center justify-center gap-2 mt-2 text-sm text-[#167389]">
             <ShoppingBag className="w-4 h-4" />
             <span>Beauty & Cosmetics Products Management</span>
           </div>
@@ -113,7 +111,7 @@ export default function AdminLoginPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="w-5 h-5 text-pink-500" />
+                  <Mail className="w-5 h-5 text-[#167389]" />
                 </div>
                 <input
                   type="email"
@@ -133,7 +131,7 @@ export default function AdminLoginPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="w-5 h-5 text-pink-500" />
+                  <Lock className="w-5 h-5 text-[#167389]" />
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -146,7 +144,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((s) => !s)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-pink-600 hover:text-pink-700 transition"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-[#167389] hover:text-pink-700 transition"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
@@ -171,7 +169,7 @@ export default function AdminLoginPage() {
               </label>
               <button
                 type="button"
-                className="text-pink-600 hover:text-pink-700 font-medium hover:underline"
+                className="text-black hover:text-pink-700 font-medium hover:underline"
               >
                 Forgot password?
               </button>
@@ -181,7 +179,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 hover:from-pink-600 hover:via-rose-600 hover:to-purple-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-[#167389]  to-[#167389] hover:from-pink-600 hover:via-rose-600 hover:to-purple-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>

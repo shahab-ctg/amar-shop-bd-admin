@@ -31,14 +31,14 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-xl font-bold">{brand}</h3>
-                <p className="text-xs text-pink-300">Admin Panel</p>
+                <p className="text-xs text-black">Admin Panel</p>
               </div>
             </div>
-            <p className="text-pink-200 text-sm leading-relaxed mb-4">
+            <p className="text-black text-sm leading-relaxed mb-4">
               Managing premium beauty & cosmetics products with elegance and
               care. Building trust through quality and authenticity.
             </p>
-            <div className="flex items-center gap-2 text-sm text-pink-300">
+            <div className="flex items-center gap-2 text-sm text-black">
               <Heart className="w-4 h-4 fill-pink-300" />
               <span>Beauty that inspires confidence</span>
             </div>
@@ -50,7 +50,7 @@ export default function Footer() {
               <span className="w-1 h-6 bg-pink-400 rounded-full"></span>
               Quick Links
             </h4>
-            <ul className="space-y-2.5 text-pink-200">
+            <ul className="space-y-2.5 text-black">
               <li>
                 <Link
                   href="/dashboard"
@@ -89,16 +89,16 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <span className="w-1 h-6 bg-pink-400 rounded-full"></span>
+              <span className="w-1 h-6 bg-pink-black rounded-full"></span>
               Contact Us
             </h4>
-            <ul className="space-y-3 text-pink-200 text-sm">
+            <ul className="space-y-3 text-black text-sm">
               <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-pink-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-black flex-shrink-0 mt-0.5" />
                 <span>Chittagong, Bangladesh</span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-pink-400 flex-shrink-0" />
+                <Phone className="w-5 h-5 text-black flex-shrink-0" />
                 <a
                   href={`tel:${hotline}`}
                   className="hover:text-white transition-colors"
@@ -107,7 +107,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-pink-400 flex-shrink-0" />
+                <Mail className="w-5 h-5 text-black flex-shrink-0" />
                 <a
                   href="mailto:admin@amarshop.com"
                   className="hover:text-white transition-colors"
@@ -159,23 +159,21 @@ export default function Footer() {
               </a>
             </div>
             <div className="bg-[#167389] border border-[#167389] rounded-xl p-4">
-              <p className="text-xs text-pink-300 mb-2 font-semibold">
+              <p className="text-xs text-black mb-2 font-semibold">
                 Admin Panel Hours
               </p>
-              <p className="text-sm text-pink-200">24/7 System Access</p>
-              <p className="text-xs text-pink-300 mt-1">
-                Support: 8 AM - 10 PM
-              </p>
+              <p className="text-sm text-black">24/7 System Access</p>
+              <p className="text-xs text-black mt-1">Support: 8 AM - 10 PM</p>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-pink-800 py-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-pink-300">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-black">
             <p>
               © {currentYear}{" "}
-              <span className="font-semibold text-white">{brand}</span>. All
+              <span className="font-semibold text-[#167389]">{brand}</span>. All
               rights reserved.
             </p>
             <div className="flex items-center gap-4">
@@ -185,7 +183,7 @@ export default function Footer() {
               >
                 Privacy Policy
               </Link>
-              <span className="text-pink-700">|</span>
+              <span className="text-black">|</span>
               <Link
                 href="/terms"
                 className="hover:text-white transition-colors"
