@@ -50,6 +50,7 @@ export default function AdminLoginPage() {
 
       // ✅ Redirect
       router.push("/dashboard");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Login failed:", err);
       setApiError(err.message || "Login failed. Please try again.");

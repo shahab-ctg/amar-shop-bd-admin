@@ -1,4 +1,4 @@
-// src/app/products/page.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -49,6 +49,7 @@ type Product = {
   brand?: string;
   description?: string;
 };
+
 
 const n = (v: unknown, fallback = 0): number =>
   typeof v === "number" ? v : Number(v ?? fallback);
@@ -726,6 +727,7 @@ export default function ProductsPage() {
                     <select
                       value={form.status}
                       onChange={(e) =>
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         setForm({ ...form, status: e.target.value as any })
                       }
                       className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400 transition"

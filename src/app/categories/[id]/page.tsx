@@ -4,6 +4,7 @@ import Page from "@/components/Page";
 import { api } from "@/lib/api";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+export const dynamic = "force-dynamic";
 
 export default function EditCategory() {
   const params = useParams<{ id: string }>();

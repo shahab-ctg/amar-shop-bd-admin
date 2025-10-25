@@ -19,14 +19,14 @@ export default function Footer() {
   const hotline = process.env.NEXT_PUBLIC_HOTLINE || "01700000000";
 
   return (
-    <footer className="bg-gradient-to-br from-pink-900 via-rose-800 to-purple-900 text-white mt-auto">
+    <footer className="bg-white text-black mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-12">
           {/* Brand Column */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-pink-400 to-rose-500 rounded-xl flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-[#167389] rounded-xl flex items-center justify-center shadow-lg">
                 <Sparkles className="w-7 h-7 text-white" strokeWidth={2.5} />
               </div>
               <div>
@@ -121,7 +121,7 @@ export default function Footer() {
           {/* Social & Info */}
           <div>
             <h4 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <span className="w-1 h-6 bg-pink-400 rounded-full"></span>
+              <span className="w-1 h-6 text-black rounded-full"></span>
               Connect With Us
             </h4>
             <div className="flex gap-3 mb-6">
@@ -129,7 +129,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-pink-800 hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -137,7 +137,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-pink-800 hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
                 <Instagram className="w-5 h-5" />
               </a>
@@ -145,7 +145,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-pink-800 hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
                 <Twitter className="w-5 h-5" />
               </a>
@@ -153,12 +153,12 @@ export default function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-pink-800 hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+                className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
               >
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
-            <div className="bg-pink-800/50 border border-pink-700 rounded-xl p-4">
+            <div className="bg-[#167389] border border-[#167389] rounded-xl p-4">
               <p className="text-xs text-pink-300 mb-2 font-semibold">
                 Admin Panel Hours
               </p>

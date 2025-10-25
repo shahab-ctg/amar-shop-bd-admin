@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAuthRoute = pathname === "/login"; // ✅ login পেজে navbar/footer থাকবে না
+  const isAuthRoute = pathname === "/login"; 
   return (
     <>
       {!isAuthRoute && <Topbar />}

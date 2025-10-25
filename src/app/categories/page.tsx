@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useMemo } from "react";
@@ -25,6 +26,7 @@ import type {
 } from "@/types/category";
 import { isActive } from "@/types/category";
 import UploadImage, { UploadValue } from "@/components/UploadImage";
+
 
 /** ---------- Runtime helpers: handle name/title mixed shapes ---------- */
 type AnyCategory = AdminCategory & { title?: string }; // API কিছু ক্ষেত্রে title দিচ্ছে
@@ -170,7 +172,7 @@ export default function CategoriesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const payload: CreateCategoryDTO = {
-      name: formData.name, // BE এইটা নেয়
+      name: formData.name, 
       slug: formData.slug,
       image: formData.image || undefined,
       description: formData.description || undefined,
@@ -238,7 +240,7 @@ export default function CategoriesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8 text-center sm:text-left">
-            <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 flex justify-center sm:justify-start items-center gap-3 flex-wrap">
+            <h1 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600  to-cyan-600 flex justify-center sm:justify-start items-center gap-3 flex-wrap">
               <FolderHeart className="w-8 sm:w-10 h-8 sm:h-10 text-pink-500" />
               Category Management
             </h1>
@@ -261,7 +263,7 @@ export default function CategoriesPage() {
             </div>
             <button
               onClick={() => openModal()}
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white font-semibold shadow hover:shadow-lg transition text-sm sm:text-base"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-600  to-cyan-600 text-white font-semibold shadow hover:shadow-lg transition text-sm sm:text-base"
             >
               <Plus className="w-4 h-4 sm:w-5 sm:h-5" /> Add Category
             </button>

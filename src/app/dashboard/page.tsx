@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import {
   Package,
   ShoppingCart,
@@ -12,6 +12,7 @@ import {
   XCircle,
   AlertCircle,
 } from "lucide-react";
+export const dynamic = "force-dynamic";
 
 export default function DashboardPage() {
   const stats = [
@@ -99,7 +100,10 @@ export default function DashboardPage() {
     },
   ];
 
-  const getStatusBadge = (status) => {
+  // Fixed: Add proper TypeScript type for status parameter
+  const getStatusBadge = (
+    status: "pending" | "processing" | "delivered" | "cancelled"
+  ) => {
     const styles = {
       pending: { bg: "bg-amber-100", text: "text-amber-700", icon: Clock },
       processing: {
@@ -139,11 +143,12 @@ export default function DashboardPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         {/* Page Header */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#167389] to-[#167389] mb-2">
             Dashboard Overview
           </h1>
           <p className="text-sm sm:text-base text-gray-600">
-            Welcome back! Here's what's happening with your beauty store today.
+            Welcome back! Here is what is happening with your beauty store
+            today.
           </p>
         </div>
 
@@ -216,7 +221,13 @@ export default function DashboardPage() {
                       <span className="font-bold text-gray-800 text-sm sm:text-base">
                         {order.id}
                       </span>
-                      {getStatusBadge(order.status)}
+                      {getStatusBadge(
+                        order.status as
+                          | "pending"
+                          | "processing"
+                          | "delivered"
+                          | "cancelled"
+                      )}
                     </div>
                     <p className="text-xs sm:text-sm text-gray-600">
                       {order.customer}

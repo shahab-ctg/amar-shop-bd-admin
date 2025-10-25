@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Guard from "@/components/Guard";
 import Page from "@/components/Page";
 import { useState } from "react";
@@ -11,6 +11,7 @@ type CreateDTO = {
   image?: string;
   status?: "ACTIVE" | "HIDDEN";
 };
+
 
 export default function NewCategory() {
   const [form, setForm] = useState<CreateDTO>({

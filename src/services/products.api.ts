@@ -1,4 +1,5 @@
-// src/services/products.api.ts
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export type SizeDTO = { unit?: "ml" | "g" | "pcs"; value?: number };
@@ -48,7 +49,7 @@ export type AdminProductDTO = {
   batchNo?: string;
 };
 
-// ✅ Safe base URL (no runtime throw)
+//  Safe base URL (no runtime throw)
 const baseUrl =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_BASE ||
@@ -74,7 +75,7 @@ export const productsApi = createApi({
   }),
   tagTypes: ["Products"],
   endpoints: (builder) => ({
-    // ⚙️ GET /products?q=...&category=...
+    //  GET /products?q=...&category=...
     listProducts: builder.query<
       any,
       { page?: number; q?: string; category?: string }
@@ -89,13 +90,13 @@ export const productsApi = createApi({
       providesTags: ["Products"],
     }),
 
-    // ✅ POST /products
+    //  POST /products
     createProduct: builder.mutation<any, AdminProductDTO>({
       query: (body) => ({ url: `/admin/products`, method: "POST", body }),
       invalidatesTags: ["Products"],
     }),
 
-    // ✅ PATCH /products/:id
+    //  PATCH /products/:id
     updateProduct: builder.mutation<any, { id: string } & AdminProductDTO>({
       query: ({ id, ...body }) => ({
         url: `/admin/products/${id}`,
@@ -105,7 +106,7 @@ export const productsApi = createApi({
       invalidatesTags: ["Products"],
     }),
 
-    // ✅ DELETE /products/:id
+    //  DELETE /products/:id
     deleteProduct: builder.mutation<any, string>({
       query: (id) => ({ url: `/admin/products/${id}`, method: "DELETE" }),
       invalidatesTags: ["Products"],

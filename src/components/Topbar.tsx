@@ -66,7 +66,7 @@ export default function Topbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-pink-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-[#167389] backdrop-blur-md border-b border-pink-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Header */}
         <div className="flex items-center gap-4 py-4">
@@ -75,16 +75,14 @@ export default function Topbar() {
             href="/dashboard"
             className="flex items-center gap-2 shrink-0 group"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+            <div className="w-10 h-10 bg-gradient-to-br from-[#167389] to-[#167389] rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
               <Sparkles className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
             <div className="hidden sm:block">
-              <div className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-700 to-rose-600">
+              <div className="text-lg font-bold text-transparent bg-clip-text text-white">
                 {brand}
               </div>
-              <div className="text-xs text-pink-600 font-medium">
-                Admin Panel
-              </div>
+              <div className="text-xs text-white font-medium">Admin Panel</div>
             </div>
           </Link>
 
@@ -101,7 +99,7 @@ export default function Topbar() {
                   className={clsx(
                     "flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-200",
                     isActive
-                      ? "bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md"
+                      ? "bg-[#167389] text-white shadow-md"
                       : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
                   )}
                 >
@@ -131,16 +129,42 @@ export default function Topbar() {
                 value={cat}
                 onChange={(e) => setCat(e.target.value)}
                 disabled={isLoading}
-                className="px-4 py-3.5 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 bg-pink-200 text-gray-900"
+                className="
+    w-full sm:w-auto px-4 py-3.5 border border-pink-200 rounded-xl
+    focus:ring-2 focus:ring-pink-300 focus:border-pink-400
+    bg-white text-[#167389] font-medium
+    placeholder:text-[#167389]
+    shadow-sm hover:shadow-md transition-all
+    text-sm sm:text-base
+    relative z-[50]  /* ✅ ensures dropdown appears on top */
+  "
+                style={{
+                  WebkitAppearance: "menulist", // ✅ ensures visibility on Safari/Chrome
+                  color: "#167389",
+                }}
               >
-                <option value="" className="text-pink-700 bg-pink-50">
+                <option
+                  value=""
+                  className="text-[#167389] bg-white font-medium sm:text-base text-sm"
+                >
                   {isLoading ? "Loading..." : "All categories"}
                 </option>
+
                 {cats.map((c) => (
                   <option
                     key={c._id}
                     value={c.slug}
-                    className="text-pink-700 bg-pink-200 hover:bg-pink-100 focus:bg-pink-100 focus:text-pink-800"
+                    className="
+        text-[#167389] bg-white
+        hover:bg-pink-100 hover:text-pink-800
+        active:bg-pink-100 active:text-pink-800
+        focus:bg-pink-100 focus:text-pink-800
+        font-medium sm:text-base text-sm
+      "
+                    style={{
+                      backgroundColor: "white", // ✅ fixes invisible options on Windows
+                      color: "#167389",
+                    }}
                   >
                     {c.name}
                   </option>
@@ -149,7 +173,7 @@ export default function Topbar() {
             </div>
             <button
               type="submit"
-              className="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-medium rounded-xl hover:from-pink-600 hover:to-rose-700 transition-all shadow-md hover:shadow-lg"
+              className="px-5 py-2.5 bg-gradient-to-r from-[#167389] to-[#167389] text-white font-medium rounded-xl hover:from-pink-600 hover:to-rose-700 transition-all shadow-md hover:shadow-lg"
             >
               Search
             </button>
@@ -215,21 +239,39 @@ export default function Topbar() {
                 value={cat}
                 onChange={(e) => setCat(e.target.value)}
                 disabled={isLoading}
-                className="px-4 py-3.5 border border-pink-200 rounded-xl focus:ring-2 focus:ring-pink-300 focus:border-pink-400 bg-pink-200 "
+                className="
+    w-full px-4 py-3.5 border border-pink-200 rounded-xl
+    focus:ring-2 focus:ring-pink-300 focus:border-pink-400
+    bg-white text-[#167389] font-medium
+    shadow-sm transition-all text-base
+    relative z-[50]
+  "
+                style={{
+                  WebkitAppearance: "menulist",
+                  color: "#167389",
+                }}
               >
-                <option value="">
+                <option
+                  value=""
+                  className="text-[#167389] bg-white font-medium"
+                >
                   {isLoading ? "Loading..." : "All categories"}
                 </option>
                 {cats.map((c) => (
                   <option
                     key={c._id}
                     value={c.slug}
-                    className="bg-pink-200 text-pink-600"
+                    className="bg-white text-[#167389] font-medium"
+                    style={{
+                      backgroundColor: "white",
+                      color: "#167389",
+                    }}
                   >
-                    {c?.name}
+                    {c.name}
                   </option>
                 ))}
               </select>
+
               <button
                 type="submit"
                 className="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-medium rounded-xl shadow-md"

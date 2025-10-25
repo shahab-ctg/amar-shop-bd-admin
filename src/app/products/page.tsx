@@ -1,5 +1,4 @@
-// src/app/products/page.tsx
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -345,8 +344,8 @@ export default function ProductsPage() {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
           {/* Header */}
           <div className="mb-4 sm:mb-6 lg:mb-8">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-rose-600 mb-2 flex items-center gap-2 sm:gap-3">
-              <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-pink-600" />
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#167389]  to-[#167389] mb-2 flex items-center gap-2 sm:gap-3">
+              <Sparkles className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#167389]" />
               <span className="leading-tight">Products Management</span>
             </h1>
             <p className="text-xs sm:text-sm lg:text-base text-gray-600">
@@ -386,7 +385,7 @@ export default function ProductsPage() {
               {/* Add */}
               <button
                 onClick={openCreate}
-                className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition shadow-md hover:shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-[#167389] to-[#167389] text-white font-semibold hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition shadow-md hover:shadow-lg"
               >
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Add Product</span>
@@ -415,14 +414,12 @@ export default function ProductsPage() {
                   n(p.price),
                   p.compareAtPrice != null ? n(p.compareAtPrice) : undefined
                 );
-                 const imgSrc =
-                   (Array.isArray(p.images) && p.images.length > 0
-                     ? p.images[0]
-                     : p.image) || "";
+                const imgSrc =
+                  (Array.isArray(p.images) && p.images.length > 0
+                    ? p.images[0]
+                    : p.image) || "";
 
-                 const showImage = isValidImageUrl(imgSrc);
-
-              
+                const showImage = isValidImageUrl(imgSrc);
 
                 return (
                   <div
@@ -733,6 +730,7 @@ export default function ProductsPage() {
                     <select
                       value={form.status}
                       onChange={(e) =>
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         setForm({ ...form, status: e.target.value as any })
                       }
                       className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400 transition"
