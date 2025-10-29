@@ -167,12 +167,12 @@ export default function AdminLoginPage() {
                   Remember me
                 </span>
               </label>
-              <button
+              {/* <button
                 type="button"
                 className="text-black hover:text-pink-700 font-medium hover:underline"
               >
                 Forgot password?
-              </button>
+              </button> */}
             </div>
 
             {/* Submit */}
