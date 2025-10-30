@@ -17,6 +17,7 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -71,17 +72,22 @@ export default function Topbar() {
         <div className="flex items-center gap-4 py-4">
           {/* Logo & Brand */}
           <Link
-            href="/dashboard"
+            href="/"
             className="flex items-center gap-2 shrink-0 group"
+            aria-label="Go to homepage"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-[#167389] to-[#167389] rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-              <Sparkles className="w-6 h-6 text-white" strokeWidth={2.5} />
+            <div className="relative w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-xl overflow-hidden bg-white shadow-md flex items-center justify-center">
+              <Image
+                src="/logo-amar-shop.jpg"
+                alt="Amar Shop Logo"
+                fill
+                sizes="(max-width:768px) 36px, 48px"
+                className="object-contain"
+                priority
+              />
             </div>
-            <div className="hidden sm:block">
-              <div className="text-lg font-bold text-transparent bg-clip-text text-white">
-                {brand}
-              </div>
-              <div className="text-xs text-white font-medium">Admin Panel</div>
+            <div className="hidden sm:block text-lg font-bold text-white tracking-wide">
+              {brand}
             </div>
           </Link>
 
@@ -138,7 +144,7 @@ export default function Topbar() {
     relative z-[50] 
   "
                 style={{
-                  WebkitAppearance: "menulist", 
+                  WebkitAppearance: "menulist",
                   color: "#167389",
                 }}
               >
@@ -161,7 +167,7 @@ export default function Topbar() {
         font-medium sm:text-base text-sm
       "
                     style={{
-                      backgroundColor: "white", 
+                      backgroundColor: "white",
                       color: "#167389",
                     }}
                   >

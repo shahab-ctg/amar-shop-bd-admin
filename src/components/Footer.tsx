@@ -15,8 +15,8 @@ import {
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  const brand = process.env.NEXT_PUBLIC_BRAND || "Amar Shop";
-  const hotline = process.env.NEXT_PUBLIC_HOTLINE || "01700000000";
+  const brand = process.env.NEXT_PUBLIC_BRAND || "Amaar Shop";
+  const hotline = process.env.NEXT_PUBLIC_HOTLINE || "+8801318319610";
 
   return (
     <footer className="bg-white text-black mt-auto">
@@ -95,7 +95,7 @@ export default function Footer() {
             <ul className="space-y-3 text-black text-sm">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-black flex-shrink-0 mt-0.5" />
-                <span>Chittagong, Bangladesh</span>
+                <span>Dhaka, Bangladesh</span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-black flex-shrink-0" />
@@ -103,7 +103,7 @@ export default function Footer() {
                   href={`tel:${hotline}`}
                   className="hover:text-white transition-colors"
                 >
-                  +880 {hotline}
+                  {hotline}
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -126,7 +126,7 @@ export default function Footer() {
             </h4>
             <div className="flex gap-3 mb-6">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/1Ara58741x"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
@@ -134,7 +134,7 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/amaarshopbd?igsh=MTk5cWtmbzAyZTRyMQ=="
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
@@ -142,7 +142,7 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://www.tiktok.com/@amaarshop1?_t=ZS-90tPDmEVWSY&_r=1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
@@ -150,7 +150,7 @@ export default function Footer() {
                 <Twitter className="w-5 h-5" />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://youtube.com/@amarshopb?si=oblM13m2Lo-NamLI"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10  hover:bg-pink-700 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"

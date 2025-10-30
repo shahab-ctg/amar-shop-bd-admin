@@ -349,7 +349,7 @@ export default function ProductsPage() {
               <span className="leading-tight">Products Management</span>
             </h1>
             <p className="text-xs sm:text-sm lg:text-base text-gray-600">
-              Create, update & manage your beauty products
+              Create, update & manage your products
             </p>
           </div>
 
@@ -364,7 +364,7 @@ export default function ProductsPage() {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-400 transition"
+                  className="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-pink-200 transition"
                 />
               </div>
 
@@ -385,7 +385,7 @@ export default function ProductsPage() {
               {/* Add */}
               <button
                 onClick={openCreate}
-                className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-[#167389] to-[#167389] text-white font-semibold hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition shadow-md hover:shadow-lg"
+                className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-[#167389] to-[#167389] text-white font-semibold hover:from-cyan-300 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-300 transition shadow-md hover:shadow-lg"
               >
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Add Product</span>
@@ -505,10 +505,10 @@ export default function ProductsPage() {
                         </div>
                       )}
 
-                      <div className="flex gap-2">
+                      <div className="flex flex-col lg:flex gap-2">
                         <button
                           onClick={() => openEdit(p)}
-                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-pink-50 text-pink-700 hover:bg-pink-100 border border-pink-100 transition text-xs sm:text-sm"
+                          className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-pink-50 text-pink-700 hover:from-cyan-300 hover:to-cyan-700 border border-pink-100 transition text-xs sm:text-sm"
                         >
                           <Edit2 className="w-4 h-4" />
                           Edit
@@ -768,7 +768,7 @@ export default function ProductsPage() {
                   <button
                     type="submit"
                     disabled={isCreating || isUpdating}
-                    className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-[#167389] to-[#167389] text-white font-semibold hover:from-pink-700 hover:to-purple-700 disabled:opacity-50 inline-flex items-center justify-center gap-2 transition shadow-md"
+                    className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base rounded-xl bg-gradient-to-r from-[#167389] to-[#167389] text-white font-semibold hover:from-cyan-300 hover:to-cyan-700 disabled:opacity-50 inline-flex items-center justify-center gap-2 transition shadow-md"
                   >
                     {isCreating || isUpdating ? (
                       <>

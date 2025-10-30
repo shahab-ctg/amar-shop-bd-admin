@@ -32,7 +32,7 @@ export default function Home() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#167389] to-[#167389] mb-3 sm:mb-4 animate-slide-up">
-              Amar Shop Admin
+              Amaar Shop Admin
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-2 animate-slide-up animation-delay-200">
               Welcome to your admin panel
@@ -122,7 +122,7 @@ export default function Home() {
 
           {/* Call to Action Button */}
           <Link href={"/login"}>
-            <button className="group relative inline-flex items-center justify-center gap-2 mt-4 sm:mt-8 bg-gradient-to-r from-[#167389] to-[#167389] hover:from-pink-600 hover:via-rose-600 hover:to-purple-700 text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-1000 text-sm sm:text-base">
+            <button className="group relative inline-flex items-center justify-center gap-2 mt-4 sm:mt-8 bg-gradient-to-r from-[#167389] to-[#167389] hover:from-cyan-300 hover:to-cyan-700 text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 animate-fade-in animation-delay-1000 text-sm sm:text-base">
               <span>Get Started</span>
               <svg
                 className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
